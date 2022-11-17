@@ -8,9 +8,8 @@ crate-type = ["cdylib", "rlib"]
 name = "zome_0"
 
 [dependencies]
-serde = "=1.0.136"
-chrono = { version = "0.4.22", default-features = false, features = ["clock", "std", "oldtime", "serde"], optional = true }
+hdk = { workspace = true }
+serde = { workspace = true }
 derive_more = "0"
-zome_0_integrity = { path = "../../integrity_zomes/zome_0_integrity" }
 
-hdk = "0.0.147"
+zome_0_integrity = { path = "../../integrity_zomes/zome_0_integrity" }

@@ -14,16 +14,28 @@ import { decode, encode } from "@msgpack/msgpack";
 
 
 interface SignedZomeCall {
-  cap_secret: null;
   cell_id: CellId,
   zome_name: string,
   fn_name: string,
   payload: any,
+  cap_secret: null,
   provenance: Uint8Array,
   signature: Uint8Array,
   nonce: number,
   expires_at: number,
 }
+
+// interface ZomeCallUnsigned {
+//   provenance: AgentPubKey,
+//   cell_id: CellId,
+//   zome_name: string, // ZomeName
+//   fn_name: string, // FunctionName
+//   cap_secret: null, // Option<CapSecret>
+//   payload: any, // ExternIO
+//   nonce: number, // Nonce256Bits ( [u8; 32] )
+//   expires_at: number, // Timestamp (from holochain_zome_types)
+// }
+
 
 interface ZomeCallUnsigned {
   provenance: any,
@@ -32,7 +44,7 @@ interface ZomeCallUnsigned {
   fn_name: string,
   cap_secret: null,
   payload: any,
-  nonce: number,
+  nonce: number[],
   expires_at: number,
 }
 
@@ -83,9 +95,11 @@ export class CreateTestEntry extends LitElement {
     // zome call expires after 1 day
     // const expiry = (new Date()).getTime() * 1000 + (24*60*60*1000*1000);
     // zome call expires after 3 seconds
+
+
     const expiry = (new Date()).getTime() * 1000 + (3*1000*1000);
 
-
+    const nonce = Array.from(Array(32)).map(x=>Math.floor(Math.random()*100));
 
     const testEntry: TestEntry = {
       title: this._title!,
@@ -99,7 +113,7 @@ export class CreateTestEntry extends LitElement {
       fn_name: 'create_test_entry',
       cap_secret: null, // conversion to array for tauri probably needed as well in case not null
       payload: Array.from(encode(testEntry)),
-      nonce: 23,
+      nonce,
       expires_at: expiry,
     };
 

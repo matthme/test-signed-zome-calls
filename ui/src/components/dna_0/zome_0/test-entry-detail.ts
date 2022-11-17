@@ -52,16 +52,16 @@ export class TestEntryDetail extends LitElement {
       <div style="display: flex; flex-direction: column">
         <span style="font-size: 18px">TestEntry</span>
 
-        
+
     <title-detail
-    
+
     .value=${this._testEntry.title}
       style="margin-top: 16px"
     ></title-detail>
 
-        
+
     <content-detail
-    
+
     .value=${this._testEntry.content}
       style="margin-top: 16px"
     ></content-detail>
